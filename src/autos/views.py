@@ -23,3 +23,29 @@ def autos(request):
 
         return Response({'mensaje': 'Datos invalidos'}, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(["GET", "PUT", "DELETE"])
+def autos_detail(request, pk):
+    auto = get_object_or_404(Auto, pk=pk)
+    
+    if request.method == "GET":
+        serializer = AutoSerializer(auto)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    if request.method == "PUT":
+        serializer = AutoSerializer(auto, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                {"mensaje": "Auto Actualizado"}, status=status.HTTP_200_OK
+            )
+        return Response(
+            {"mensaje": "No se Actualizó porque no es válido"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    if request.method == "DELETE":
+        auto.delete()
+        return Response(
+            {"mensaje": "Auto Borrado"},
+            status=status.HTTP_200_OK,
+        )
