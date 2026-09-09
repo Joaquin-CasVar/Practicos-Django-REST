@@ -1,11 +1,12 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+
 # Create your views here.
-from .models import Auto
-from .serializers import AutoSerializer
+from .models import Auto, Marca, TipoCombustible, TipoTransmision
+from .serializers import AutoSerializer, MarcaSerializer, TipoCombustibleSerializer, TipoTransmisionSerializer
 
 @api_view(['GET', 'POST'])
 def autos(request):
@@ -49,3 +50,18 @@ def autos_detail(request, pk):
             {"mensaje": "Auto Borrado"},
             status=status.HTTP_200_OK,
         )
+    
+
+class MarcaListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Marca.objects.all()
+    serializer_class = MarcaSerializer
+
+class TipoCombustibleListCreateAPIView(generics.ListCreateAPIView):
+    queryset = TipoCombustible.objects.all()
+    serializer_class = TipoCombustibleSerializer
+
+class TipoTransmisionListCreateAPIView(generics.ListCreateAPIView):
+    queryset = TipoTransmision.objects.all()
+    serializer_class = TipoTransmisionSerializer
+
+
