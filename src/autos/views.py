@@ -56,11 +56,25 @@ class MarcaListCreateAPIView(generics.ListCreateAPIView):
     queryset = Marca.objects.all()
     serializer_class = MarcaSerializer
 
+
+class MarcaListUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Marca.objects.all()
+    serializer_class = MarcaSerializer
+
 class TipoCombustibleListCreateAPIView(generics.ListCreateAPIView):
     queryset = TipoCombustible.objects.all()
     serializer_class = TipoCombustibleSerializer
 
+
+class TipoCombustibleListUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = TipoCombustible.objects.all()
+    serializer_class = TipoCombustibleSerializer
+
 class TipoTransmisionListCreateAPIView(generics.ListCreateAPIView):
+    queryset = TipoTransmision.objects.all()
+    serializer_class = TipoTransmisionSerializer
+
+class TipoTransmisionListUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = TipoTransmision.objects.all()
     serializer_class = TipoTransmisionSerializer
 
