@@ -34,7 +34,7 @@ class ColorSerializer(serializers.ModelSerializer):
 
 class AutoPublicSerializer(serializers.ModelSerializer):
     color = serializers.StringRelatedField(read_only=True)
-    marca_detalle = MarcaSerializer(source='marca', read_only=True)
+    marca = MarcaSerializer(read_only=True)
 
     class Meta:
         model = Auto
@@ -51,12 +51,6 @@ class AutoPublicSerializer(serializers.ModelSerializer):
 
 
 class AutoSerializer(serializers.ModelSerializer):
-    color = serializers.StringRelatedField(read_only=True)
-    marca_detalle = MarcaSerializer(source='marca', read_only=True)
-    combustible_detalle = TipoCombustibleSerializer(source='combustible', read_only=True)
-    direccion = DireccionSerializer(read_only=True)
-    transmision_detalle = TipoTransmisionSerializer(source='transmision', read_only=True)
-
     class Meta:
         model = Auto
         fields = '__all__'
