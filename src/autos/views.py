@@ -1,10 +1,8 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import status, generics
+from rest_framework import status, generics, viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
-
-# Create your views here.
+from .permissions import IsStaffOrReadOnly
 from .models import Auto, Marca, TipoCombustible, TipoTransmision
 from .serializers import AutoSerializer, MarcaSerializer, TipoCombustibleSerializer, TipoTransmisionSerializer
 
@@ -52,30 +50,18 @@ def autos_detail(request, pk):
         )
     
 
-class MarcaListCreateAPIView(generics.ListCreateAPIView):
+class MarcaViewSet(viewsets.ModelViewSet):
     queryset = Marca.objects.all()
     serializer_class = MarcaSerializer
+    permission_classes = [IsStaffOrReadOnly]
 
 
-class MarcaListUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Marca.objects.all()
-    serializer_class = MarcaSerializer
-
-class TipoCombustibleListCreateAPIView(generics.ListCreateAPIView):
+class TipoCombustibleViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = TipoCombustible.objects.all()
     serializer_class = TipoCombustibleSerializer
 
 
-class TipoCombustibleListUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = TipoCombustible.objects.all()
-    serializer_class = TipoCombustibleSerializer
-
-class TipoTransmisionListCreateAPIView(generics.ListCreateAPIView):
+class TipoTransmisionViewSet(viewsets.ModelViewSet):
     queryset = TipoTransmision.objects.all()
     serializer_class = TipoTransmisionSerializer
-
-class TipoTransmisionListUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = TipoTransmision.objects.all()
-    serializer_class = TipoTransmisionSerializer
-
-
+    permission_classes = [IsStaffOrReadOnly]
