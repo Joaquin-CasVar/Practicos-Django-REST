@@ -1,7 +1,6 @@
 from rest_framework import generics, viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-# Create your views here.
 from .models import Auto, Color, Marca, TipoCombustible, TipoDireccion, TipoTransmision
 from .serializers import (
     AutoSerializer, 
@@ -12,6 +11,7 @@ from .serializers import (
     DireccionSerializer,
     TipoTransmisionSerializer
 )
+from .permissions import IsStaffOrReadOnly
 
 class AutoViewSet(viewsets.ModelViewSet):
     queryset = Auto.objects.all()
@@ -28,37 +28,21 @@ class ColorViewSet(viewsets.ModelViewSet):
     serializer_class = ColorSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+class MarcaViewSet(viewsets.ModelViewSet):
+    queryset = Marca.objects.all()
+    serializer_class = MarcaSerializer
+    permission_classes = [IsStaffOrReadOnly]
+
+class TipoCombustibleViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = TipoCombustible.objects.all()
+    serializer_class = TipoCombustibleSerializer
+
 class TipoDireccionViewSet(viewsets.ModelViewSet):
     queryset = TipoDireccion.objects.all()
     serializer_class = DireccionSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
-
-
-
-class MarcaListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Marca.objects.all()
-    serializer_class = MarcaSerializer
-
-
-class MarcaListUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Marca.objects.all()
-    serializer_class = MarcaSerializer
-
-
-class TipoCombustibleListCreateAPIView(generics.ListCreateAPIView):
-    queryset = TipoCombustible.objects.all()
-    serializer_class = TipoCombustibleSerializer
-
-class TipoCombustibleListUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = TipoCombustible.objects.all()
-    serializer_class = TipoCombustibleSerializer
-
-
-class TipoTransmisionListCreateAPIView(generics.ListCreateAPIView):
+class TipoTransmisionViewSet(viewsets.ModelViewSet):
     queryset = TipoTransmision.objects.all()
     serializer_class = TipoTransmisionSerializer
-
-class TipoTransmisionListUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = TipoTransmision.objects.all()
-    serializer_class = TipoTransmisionSerializer
+    permission_classes = [IsStaffOrReadOnly]
